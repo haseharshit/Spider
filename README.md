@@ -1,9 +1,12 @@
-
- Task 1 (A) - 
+<details><summary>
+ Task 1 (A) - </summary>
+<p>
 Toffee Problem 
 Ronny is fond of toffies. He has N rupees, and the shop has M toffies. Each toffee has a price, 𝑖𝑡ℎ toffee has price of 𝐴𝑖 rupees. 
 Find the maximum no. of toffees Ronny can buy. If he can't buy anything, print 0.
-
+	</p>
+	</details>
+	<p> Approach </p>
 We will solve this by using greedy approach.
 We need to maximize number of toffees ronny can buy(regardless the price of toffees). 
 Buying a toffee of $999 or $1 will increase the count by 1 only.
@@ -13,22 +16,23 @@ Therefore there will not be any TLE.
 If N would have been larger (say 10^8). Then we could have used Countsort ( since Ai <10^7) 
 Code:
 
-int main() {
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
-    int n, k;
-    cin>>n>>k;
-    int a[n];
-    for(int i=0; i<n; i++)  cin>>a[i];
-    sort(a, a+n);
-    int i=0;
-    while(i<n && k>=a[i]){
-        k-=a[i];
-        i++;
-        
-    }
-    cout<<i<<endl;
-    return 0;
-}
+```
+ int main() {
+     int n, k;
+     cin>>n>>k;
+     int a[n];
+     for(int i=0; i<n; i++)  cin>>a[i];
+     sort(a, a+n);
+     int i=0;
+     while(i<n && k>=a[i]){
+         k-=a[i];
+         i++;
+
+     }
+     cout<<i<<endl;
+     return 0;
+ }
+```
 
 
 
@@ -42,25 +46,29 @@ int main() {
 
 
 
-
-Task 2
+<details><summary>
+	Task 2</summary>
+	<p>
 Button Factory 
 Alice and Bob are in a factory and have a button each that does nothing. They are looking over a machine and get bored so they start playing with the buttons.
 Alice presses the button P seconds after the machine starts and releases it after Q seconds. Bob presses the button R seconds after the machine starts and releases it after S seconds.
 You have to determine for how many seconds both Alice and Bob had pressed the button together.
+	</p>
+	</details>
 
-Approach:
 Alice [a,b],
 Bob[ c,d]
 Now we want intersection of Alice and Bob, 
-L(lower bound) =max(a,c) //
-U(upper bound) =min(b,d) //
+L(lower bound) =max(a,c) 
+U(upper bound) =min(b,d)
 Intersection will exist if (L<U)  
-// since according to question, if alice [1,2], and bob[2,3], then anser is 0. 
-//therefor no equal sign
+since according to question, if alice [1,2], and bob[2,3], then anser is 0. 
+therefor no equal sign
 If intersection Exists, output U-L
 Else output, 0
 Code:
+
+```
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
     int a, b, c, d;
@@ -73,29 +81,19 @@ int main() {
     return 0;
 }
 
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Lazy Lad
+<details><summary>
+	Task 3(Lazy Lads)</summary>
+	<p>
 Paras was procrastinating to take personal interviews for Algos inductions. He tried to avoid the task as much as he can. Eventually, Simran and Yasser got angry and decided to punish him.
 They locked him in a big dungeon which had q rooms with N j boxes inside j th room ( 1 <= j <= q ). They told him to stack those boxes in the shape of rows starting from 1 st row. The i th row was supposed to have exactly i boxes. But Yasser forgot to count the number of boxes. As a remedy Simran told Paras he can leave the last row incomplete (but it could be complete as well).
 Paras, somehow sneaked his laptop inside, decided to take your personal interview there. He counted the number of boxes and asked you how many number of complete rows will he be able to build from those boxes in each room.
-Approaches:
-i.	Optimal Approach
+	</p>
+	</details>
+<p> Approach </p>
+
 if n rows would have been completely filled. Number of boxes required for that would be x= n*(n+1)/2. But we have given number of boxes( i.e x,) and we have to find number complete rows
 	n*(n+1)/2 <=x  (n should be natural number.)
 	n^2+n-2x<=0 ( since x>=1, therefore one root would be +ve and one would be negative)
@@ -107,6 +105,7 @@ now since x is given with constraints 2^31-1, therefore 8*x part may result in o
 
 
 Code:
+```
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
     int n;
@@ -122,15 +121,18 @@ int main() {
     return 0;
 }
 
+```
 
 
 
 
-
-
+<details><summary>
+	Task 4</summary>
+	<p>
 Harsh is interested in prime numbers. He used to play Primeman game. According to the rules of Primeman, every even integer greater than 2 can be expressed as the sum of two primes. Harsh finds this game interesting and he decides to design a game of his own and call it ‘HarshPrime’. Since Harsh is a philomath, HarshPrime rules states that at least x prime numbers from 2 to n inclusively can be expressed as the sum of three integer numbers: two neighbouring prime numbers and 1. For example, 31 = 1 + 13 + 17.
 Two prime numbers are called neighbouring if there are no other prime numbers between them. Harsh is busy with his project so you have to help him, and find out if he is right or wrong.
-
+	</p>
+	</details>
 Approach:
 finding the prime using Sieve of Eratosthenes.and pushing prime numbers in a vector .
 This question can be reframed as if sum two prime number +1 is also a prime.
@@ -143,6 +145,7 @@ We will look for the non zero value at  kth index ( k<=n)
 And if k >=x Yes
 else No
 Code:
+```
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
     int prime[1001]={0}, ans[1001]={0};
@@ -184,3 +187,4 @@ int main() {
     }
     return 0;
 }
+```
