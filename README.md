@@ -133,6 +133,7 @@ Harsh is interested in prime numbers. He used to play Primeman game. According t
 Two prime numbers are called neighbouring if there are no other prime numbers between them. Harsh is busy with his project so you have to help him, and find out if he is right or wrong.
 	</p>
 	</details>
+
 Approach:
 finding the prime using Sieve of Eratosthenes.and pushing prime numbers in a vector .
 This question can be reframed as if sum two prime number +1 is also a prime.
@@ -144,6 +145,8 @@ For given value of n (if >12)
 We will look for the non zero value at  kth index ( k<=n)
 And if k >=x Yes
 else No
+![alt text](/t4.png?raw=true "Title")
+
 Code:
 ```
 int main() {
