@@ -1,4 +1,407 @@
 <details><summary>
+	Final problems </summary>
+<p>
+
+<details><summary>
+ counterinsurgency - </summary>
+<p>
+Paras finally came out of the dungeon and decided to take “algorithmic revenge” on Yasser. He lured Yasser’s cat to his house and put her in a cage (evil right?). He sent Yasser a note, which is as follows.
+
+" There are exactly n cages in my house labelled  to  respectively. A permutation of those  labels(integers) revenge( indexed array) is considered a correct arrangement if for every i ( <=  <= ), either of the following is true:
+
+revenge [i] completely divides i
+i completely divides revenge [i]
+Pay me amount equal to the number of correct arrangements (nothing more nothing less) and your cat is free to go. P.S. Beware of the constraints "
+
+Your task is to help Yasser figure out the amount he needs for ransom.
+
+
+</p>
+</details>
+<p> Approach </p>
+Initial approach was to use next_permutation and check individually if it is a correct arrangement. As 15! itself is a very large number, it gave TLE. So I have used backtracking and the moment it dis-satisfy the condition, (do not go beyond). this optimized the solution.  
+Code:
+
+```
+ int permute(vector<int> &a, int l, int r)
+	{
+	    if (l == r){
+		if(a[l]%l==0 || l%a[l]==0){
+		    return 1;
+		}
+		return 0;
+	    }
+	    else
+	    {
+		int count=0;
+		for (int i = l; i <= r; i++)
+		{
+
+		    swap(a[l], a[i]);
+		    if(l%a[l]==0 || a[l]%l==0)
+			count+=permute(a, l+1, r);
+		    swap(a[l], a[i]);
+		}
+		return count;
+	    }
+	}
+
+	int main() {
+	    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+	   // int t;
+	  //  cin>>t;
+	   // while(t--){
+		int n;
+		cin>>n;
+		vector<int>a(n+1);
+		for(int i=1; i<=n; i++)  a[i]=i;
+		cout<<permute(a, 1, n)<<endl;
+	   // }
+
+	    return 0;
+	}
+```
+
+
+<details><summary>
+ CS Graduate - </summary>
+<p>
+Akshay was recently gifted a permutation 𝑎 [1 2 3 ... 𝑛] of length n. Being a computer science graduate he gives more preference to binary tree than to permutations. So he decided to manipulate the gifted permutation a into a rooted binary tree. But he doesn’t want to simply transform the permutation in some random order for forming a tree. He has some rules for the transformation:
+
+the minimum element of the array becomes the root of the tree;
+all elements to the left of the minimum — form a left subtree, but if there are no elements to the left of the minimum, then the root has no left child;
+all elements to the right of the minimum — form a right subtree, but if there are no elements to the right of the minimum, then the root has no right child.
+After the transformation, you have to tell the depth of each node of the binary tree di - 𝑑1,𝑑2,…,𝑑𝑛 for 1 <= i <= n.
+</p>
+</details>
+<p> Approach </p>
+The idea here is to find the minimum in range [l,u], (say at index i) and divide the problem into [l,i-1], [i+1, u]. Repeat.
+
+Code:
+```
+	void helper(int a[], int b[], int l, int u, int val){
+	    if(l>u)
+		return;
+	    if(u==l){
+		b[l]=val;
+		return ;
+	    }
+	    else{
+		int i=l, index=l;
+		int x=a[l];
+		while(i<=u){
+		    if(x>a[i]){
+			index=i;
+			x=a[i];
+		    }
+		    i++;
+		}
+		b[index]=val;
+		//cout<<"Min val at "<<l<<" "<<u<<" is at "<<index<<endl;
+		helper(a, b, index+1, u, val+1);
+		helper(a, b, l, index-1, val+1);
+	    }
+	}
+
+	int main() {
+	    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+	    int t;
+	    cin>>t;
+	    while(t--){
+		int n;
+		cin>>n;
+		int a[n], b[n]={0};
+		for(int i=0; i<n; i++){
+		    cin>>a[i];
+		}
+		int x=0;
+		helper(a, b, 0, n-1, x);
+		for(int i=0; i<n; i++)
+		    cout<<b[i]<<" ";
+		cout<<endl;
+	    }
+	    return 0;
+	}
+```
+
+			   
+			   
+			   
+<details><summary>
+ The Shawshank Redemption - </summary>
+<p>
+Andy was sentenced to life in prison, for a crime he did not committed. That's why he was desperate to escape. He used a tiny hammer to dig a tunnel in the shawshank prison. The prison can be described with a 2D grid. Currently, Andy's Cell is in top left corner of the grid, that is, at 0th and 0th column. He has to reach bottom right corner to escape the prison. In 1 day, he can dig one block of tunnel to either of the adjacent cells to him. From one cell , he can go left, right , top and bottom. The problem is, in some of the cells, there are guards. Andy wants to avoid them. Find the minimum number of days andy can spend to dig the tunnel, so that he can avoid the guards and escape the shawshank.
+</p>
+</details>
+<p> Approach </p>
+We have to use BFS in this problem and keep the outofBound thing in mind. We should avoid revisiting the location again. Hence a vector visited is being used.
+queue is being used for BFS.
+
+
+Code:
+```
+	class item{
+	    public:
+	    int x, y, val;
+	    item(int X, int Y, int VAL){
+		x=X;
+		y=Y;
+		val=VAL;
+	    }
+	};
+	int helper(vector < vector<int> >&a, int n, int m){
+	    bool visited[n][m];
+	    //int count=0;
+	    for(int i=0; i<n; i++)
+		for(int j=0; j<m; j++){
+		    if(a[i][j]==-1)
+			visited[i][j]=true;
+		    else
+			visited[i][j]=false;
+		}
+
+
+
+	    queue<item> q;
+	    q.push({0,0, 0});
+	    while(!q.empty()){
+		item temp=q.front();
+		q.pop();
+		if(temp.x==n-1 && temp.y==m-1){
+		    //cout<<<<endl;
+		    return temp.val;
+		}
+		if(temp.x!=0 && visited[temp.x-1][temp.y]==false){
+		    visited[temp.x-1][temp.y]=true;
+		    q.push({temp.x-1, temp.y, temp.val+1});
+		}
+		if(temp.x!=n-1 && visited[temp.x+1][temp.y]==false){
+		    visited[temp.x+1][temp.y]=true;
+		    q.push({temp.x+1, temp.y, temp.val+1});
+		}
+		if(temp.y!=0 && visited[temp.x][temp.y-1]==false){
+		    visited[temp.x][temp.y-1]=true;
+		    q.push({temp.x, temp.y-1, temp.val+1});
+		}
+		if(temp.y!=m-1 && visited[temp.x][temp.y+1]==false){
+		    visited[temp.x][temp.y+1]=true;
+		    q.push({temp.x, temp.y+1, temp.val+1});
+		}
+	      //  cout<<temp.x<<" "<<temp.y<<" "<<temp.val<<endl;
+
+	       // q.pop();
+
+	    }
+
+	    return -1;
+	}
+	int main() {
+	    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+	    int n,m;
+	    char x;
+	    cin>>n>>m;
+	    vector <vector <int>> a;
+	    for(int i=0; i<n; i++){
+		vector<int> b;
+		for(int j=0; j<m; j++){
+		    cin>>x;
+		    if(x=='#')
+			b.push_back(-1);
+		    else
+			b.push_back(MAX);
+		}
+		a.push_back(b);
+	    }
+
+	    int ans=helper(a, n, m);
+	    cout<<ans<<endl;   
+	    return 0;
+	}
+```
+
+	
+	
+	
+	
+<details><summary>
+ Counting the stairs - </summary>
+<p>
+Andy is at the floor. He can see n stairs ahead of him. k of them are broken. In one step, he can either climb 1 stair, or he can climb 2 stairs. Now he wonders, that, to reach at the top of the floor, how many ways there are. Since such ways could be very large, print them modulo . If there are no ways to reach the top, print 0.
+</p>
+</details>
+<p> Approach </p>
+Number of possible way to reach nth stair = number of ways to reach (n-1)th step (from there, user can reach n by taking 1 stemp) + number of ways to reach n-2th step(from there, user can take 2 step). if any two consecutive stairs are broken, then there is no way user can reach the top. Also. If a stair is broken, then f(n)=0 (not f(n-1)+f(n-2)
+	
+
+Code:
+```
+	int main() {
+	    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+	    ll n, k, flag=1;
+	    cin>>n>>k;
+	    int i=0;
+	    vector<ll> v(n+1, -1);
+	    while(i<k){
+		int x;
+		cin>>x;
+		v[x]=0;
+		i++;
+	    }
+
+	    for(int i=1; i<=n; i++){
+		if(v[i]==0 && v[i-1]==0){
+		    flag=0;
+		    break;
+		}
+	    }
+	    if(!flag){
+		cout<<0<<endl;
+
+	    }
+	    else{
+		ll a=0, b=1;
+		for(ll i=1; i<=n; i++){
+		    if(v[i]!=0){
+			v[i]=(a+b)%MOD;
+		    }
+		    a=b;
+		    b=v[i];
+		}
+		cout<<v[n]<<endl;
+
+	    }
+	    return 0;
+	}
+```
+
+	
+
+
+
+	
+	
+<details><summary>
+ Ranged Sum - </summary>
+<p>
+Given an array of N integers, your task is to process two kinds of queries.
+1 a b - It means update element at index a to b.
+2 l r - Find the sum of all elements that are in index range [l, r]
+
+
+</p>
+</details>
+<p> Approach </p>
+This question taught me Bucket method and Segment tree method for range queries.
+I have used Segment tree method in this question
+
+Code:
+```
+	class seg
+	{
+	    public:
+	    lll start,end,val;
+	    seg * left = NULL;
+	    seg *right = NULL;
+	    seg(lll s, lll e):start(s),end(e){}
+	};
+	seg* build(vector<lll>&nums, lll ll, lll rr)
+	    {
+		if(ll>rr)
+		    return NULL;
+		if(ll == rr)
+		{
+		    seg *tt = new seg(ll,rr);
+		    tt->val = nums[ll];
+		    return tt;
+		}
+
+		seg *tt = new seg(ll,rr);
+		lll mid = ll + (rr-ll)/2;
+		tt->left = build(nums,ll,mid);
+		tt->right = build(nums,mid+1,rr);
+		tt->val = (tt->left?tt->left->val : 0)+(tt->right?tt->right->val:0);
+		return tt;
+	    }
+	lll modify(lll index, lll val, seg* node)
+	    {
+		if(node == NULL)
+		{
+		    return 0;
+		}
+		if(node->start == index && node->end == index)
+		{
+		    lll diff = val - node->val;
+		    node->val = val;
+		    return diff;
+		}
+
+		lll mid = (node->start + node->end) /2;
+		lll diff = 0;
+		if(index<=mid)
+		{
+		    diff =  modify(index,val,node->left);
+		}
+		else
+		{
+		    diff = modify(index,val,node->right);
+		}
+		node->val+=diff;
+		return diff;
+	    }
+	lll get(lll ll, lll rr, seg* node)
+	    {
+		if(node == NULL)
+		    return 0;
+		if(node->start == ll && node->end == rr)
+		{
+		    return node->val;
+		}
+
+		lll mid = (node->start + node->end)/2;
+
+		if(rr<=mid)
+		{
+		    return get(ll,rr,node->left);
+		}
+		else if (mid < ll)
+		{
+		    return get(ll,rr,node->right);
+		}
+
+		return get(ll,mid,node->left) + get(mid+1,rr,node->right);
+	    }
+	int main() {
+	    lll n, k;
+	    cin>>n>>k;
+	    vector<lll> arr(n);
+	    for(lll i=0; i<n; i++)  cin>>arr[i];
+	    seg *root=build(arr, 0, arr.size()-1);
+	    while(k--){
+		lll choice,a,b;
+		cin>>choice>>a>>b;
+		if(choice==2){
+		    //cout<<"choo\n";
+		    cout<<get(a-1,b-1, root)<<endl;
+		}
+		else{
+		    modify(a-1, b, root);
+		}
+	    }
+	    return 0;
+	}
+```
+
+
+	
+	
+	
+</details>
+
+
+
+
+
+<details><summary>
 	First 4 problems </summary>
 <p>
 
